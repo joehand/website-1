@@ -1,0 +1,190 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+<p><strong>Q</strong> I already use RMarkdown/JupyterNotebook. How can Stencila be useful for me?&lt;br/&gt;
+<strong>A</strong> Stencila allows you collaborate with colleagues who use other tools than RMarkdown and Jupyter Notebook,
+without you having to give up your favourite tool. Stencila Coverter &#x2728; makes it possible to open documents in
+various formats (<code>Rmd</code>, <code>ipynb</code> and so on) in Stencila. The conversion is completly lossless and the file can be saved back
+in the original format &#x2728; . You can open the file in your tool of choice and see the changes your collaborator made.
+Stencila&apos;s interface provides text editing environment similar to popular text editors making it a low-entry barrier
+for collaborators unfamiliar with RMarkdown or Jupyter Notebook.</p>
+<p>With Stencila you can have interactive code cells in different programming languages by enabling various execution contexts.
+The data can be passed between the cells through the data interchange feature.
+These two features combined with the lossless conversion between formats means that researchers with different skillsets
+can easily collaborate on the same document using their preferred programming language.</p>
+<p>&lt;hr/&gt;
+<strong>Q</strong> I don&apos;t write any code for my research. Is Stencila for me? &lt;br/&gt;
+<strong>A</strong> Yes, definitely Stencila is for you! Stencila allows you to write your papers just like
+you would do it in a popular text editor (MS Word or similar) but you can save it directly in a format
+commonly used by publishers JATS <a href="https://en.wikipedia.org/wiki/Journal_Article_Tag_Suite">Journal Article Tag Suite</a>
+giving you more control over the formatting of your manuscript.</p>
+<p>Using Stencila you can easily save your work &#x2728; in formats compatible with other popular reproducible research tools
+(such as Jupyter Notebook) creating more opportunities for collaboration.</p>
+<p>&lt;hr /&gt;
+<strong>Q</strong> What are Stencila Spreadheets?&lt;br/&gt;
+<strong>A</strong> Stencila Sheets provide a way towards working within an environment similar to spreadsheet software but supporting
+reproducible approach by linking spreadsheet directly to the article allowing for capturing the analysis steps.</p>
+<p>Stencila will tie together the data in the spreadsheet, the methods you used to process the data and the researchers
+publication.
+<img src="img/stencila-mini-spreadsheet.png" alt="Example ofStencila Spreadsheet"></p>
+<p>Stencila Spreadsheets make it possible for <a href="computation/functions.md#add-new-functions">extending the spreadsheet functionality</a> by registering functions written in other
+programming languages &#x2728; . Using simple Stencila API researchers can wrap up functions written in R, Python and other
+languages, register them and thus make them available through the Stencila Spreadsheet interface.</p>
+<p>&lt;hr /&gt;
+<strong>Q</strong> I would like to try out Stencila but don&apos;t want to (or can&apos;t) install the whole suite on my machine. What can I do?&lt;br/&gt;
+<strong>A</strong> You can use <a href="https://github.com/stencila/hub">Stencila Hub</a> &#x2728; . The Hub hosts interactive Stencila documents with
+different execution contexts &#x2728; enabling collaboration and previewing Stencila Sheets, Articles and Notebooks.</p>
+<p>&lt;hr /&gt;
+<strong>Q</strong> I am trying to use R with Stencila Notebook / Spreadsheet but I am getting this error message <code>No peers able to provide: R Context</code> &lt;br/&gt;
+<strong>A</strong> Error message <code>No peers able to provide....</code> means that there is no active execution context for the language you are trying to use. In this particular case, if
+you want to use <code>R</code> within Stencila, you need to make sure you enabled the R execution context. See the <a href="installation.md">installation instructions</a> for details.</p>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/getting-started/faq.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>

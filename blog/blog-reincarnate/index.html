@@ -1,0 +1,102 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  #discourse-comments {
+  	margin-top: 4em;
+  }
+</style>
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section blog-post">
+  <div class="container">
+    <div class="content">
+      <h2 class="title is-2">Stencila blog reincarnated</h2>
+      <h3>Nokome Bentley, 21 November 2016</h3>
+      <p>Welcome to the new incarnation of the Stencila blog!</p>
+<p>The previous version of the blog was published on the Stencila <a href="https://stenci.la">hub</a>. Over there, each blog post is a document, written using our markup language <a href="https://github.com/stencila/stencila/releases/tag/0.6">Cila</a> and with it&apos;s own Git repository. We were trying to do our best to pull ourselves up by the boot straps and eat our own dog food!</p>
+<p>But dog food can be hard to eat. Particularly when you have just finished the strenuous task of pulling yourself up by your own boot straps (try it!). It was easy enough to author blog posts. But there was some friction in publishing posts, mainly because the <a href="https://github.com/stencila/hub">hub</a> is not fully developed yet. Also, we&apos;re shifting to a new architecture which puts more emphasis on integration with other formats and platforms.</p>
+<p>So, our new blog uses <a href="https://daringfireball.net/projects/markdown/">Markdown</a> and is published on <a href="https://pages.github.com/">Github pages</a>. We&apos;re still eating our own dog food by using our <a href="https://github.com/stencila/node">Node.js package</a> to convert Markdown to HTML and by using our new document editor to author posts (screenshot below). But we&apos;re hoping that with this new approach there will be less friction in getting posts written and on to the web. And of course it&apos;s all open source and available as a Git <a href="https://github.com/stencila/blog">repository</a>.</p>
+<p>Stay tuned for more...</p>
+<p><img src="screenshot.png" alt=""></p>
+
+    </div>
+    <div id="discourse-comments">
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/blog/blog-reincarnate/index.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript">
+  DiscourseEmbed = {
+    discourseUrl: 'https://community.stenci.la/',
+    discourseEmbedUrl: window.location.href,
+    
+  };
+  (function() {
+    var d = document.createElement('script'); d.type = 'text/javascript'; d.async = true;
+    d.src = DiscourseEmbed.discourseUrl + 'javascripts/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(d);
+  })();
+</script>
+
+
+</body></html>

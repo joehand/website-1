@@ -1,0 +1,208 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="javascript">Javascript</h1>
+<p>Cells and functions can be written using Javascript. An execution context for Javascript, <code>JsContext</code> is implemented in the <a href="https://github.com/stencila/stencila"><code>stencila/stencila</code></a> repository so it&apos;s already availble to all Stencila documents without the need for external hosts.</p>
+<h2 id="data-interchange">Data interchange</h2>
+<h2 id="cells">Cells</h2>
+<p>With Stencila you have full control over the sequence in which your code cells are executed. You can run the code in asynchronous order.
+You can refer to specific outputs from the given cell in any part of your Stencila document.
+Stencila does all this using its <a href="computation/engine.md">execution engine</a>.</p>
+<p>The engine manages automatic dependencies between the cells which are specific for each language. For cells written in Javascript, if you want to capture the output of the cell,
+create a variable and assign (<code>=</code>) the output.
+Note that the variables in Stencila are non-mutable &#x2728; . Whatever is on the right hand of the assignment (<code>=</code>)
+will become the cell input.</p>
+<p>You can the refer to this cell&apos;s input and output in the Stencila document.</p>
+<p>If you do not capture the output explicitly, you will not be able to refer to it later on. But the input of the cell
+will still be available.</p>
+<p>For example:</p>
+<pre><code class="language-js">x = 4
+Math.sqrt(x)
+</code></pre>
+<p>The input for this cell is <code>x</code>, the output is empty (<code>null</code>) and the value is 2 (<code>Math.sqrt(4)</code>).</p>
+<p>If you want to caputure the output and be able to refer back to it in the future you need to
+modify the cell as follows:</p>
+<pre><code class="language-js">x &lt;- 4
+y &lt;- Math.sqrt(x)
+</code></pre>
+<p>The output is now <code>y</code> and you can refer back to this variable in any other cell in Stencila.</p>
+<h2 id="functions">Functions</h2>
+<p>Stencila functions can be implemented using Javascript. To match Stencila&apos;s call semantics with Javascript&apos;s it is necessary to set the <code>pars</code> property on the Javascript function</p>
+<pre><code class="language-js">function square(value) {
+  return value * value
+}
+</code></pre>
+<p>When a parameter is repeatable, prefix the argument name with an ellipsis e.g.</p>
+<pre><code class="language-js">function sum(...value) {
+  // Implementation goes here
+}
+sum.pars = [&apos;...value&apos;]
+</code></pre>
+<pre><code class="language-mini">sum(3, [])
+</code></pre>
+<pre><code class="language-js">function sum(...values) {
+  let result = 0
+  for (let value of values) {
+    const type_ = type(value)
+    switch (type_) {
+      case &apos;number&apos;:
+        result += value
+      case &apos;array[number]&apos;:
+        for (let item of value) result += value
+      default:
+        type_error(type_)
+    }
+  }
+  return result
+}
+sum.pars = [&apos;...values&apos;]
+</code></pre>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/languages/javascript.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>

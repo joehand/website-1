@@ -1,0 +1,448 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="mini">Mini</h1>
+<blockquote>
+<p>This section contains detailed documentation for Stencila built-in
+language Mini.</p>
+</blockquote>
+<p>Stencila comes with its own simple expression language called Mini. Mini is meant to be only slightly more advanced than the expressions that you write in your calculator or into the cell of a spreadsheet. It is intended to be easy to write code in and easy to understand.</p>
+<p>When you install Stencila you can already write bits of code using Mini.
+Mini is implemented in JavaScript - so it can run straight away in a browser without
+users having to install any additional packages or software. Of course, when you enable other <a href="getting-started/installation.md#execution-contexts">execution contexts</a>,
+you can also use the respective programming languages (R, Python, SQL and so on).</p>
+<h2 id="data-types">Data types</h2>
+<p>Mini comes with a set of built-in data types which is similar to most high level programming languages.
+Each type can be constructed using literals - Mini will interpret it as relevant data type.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Type</th>
+<th style="text-align:center">Literal</th>
+<th style="text-align:left">Usage example</th>
+<th style="text-align:left">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:center">true / false</td>
+<td style="text-align:left">full = true</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:center">3.141592654</td>
+<td style="text-align:left">pi = 3.141592654</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">integer</td>
+<td style="text-align:center">42</td>
+<td style="text-align:left">x = 42</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:center">&apos;hello&apos; &lt;br /&gt; &quot;hello&quot;</td>
+<td style="text-align:left">name = &quot;hello&quot;</td>
+<td style="text-align:left">Strings are sequences of characters. &lt;br/&gt; String literals can use either single &lt;br/&gt; or double quotation marks.</td>
+</tr>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:center">[1, 2, 3]</td>
+<td style="text-align:left">num = [1, 2, 3] &lt;br/&gt; [&apos;hello world&apos;, [1, 2], {}]</td>
+<td style="text-align:left">An array is a sequence &lt;br/&gt; of values. The values in an array &lt;br/&gt; can have different types</td>
+</tr>
+</tbody>
+</table>
+<h3 id="objects">Objects</h3>
+<p>A more complex built-in data type in Mini is an object. Objects are collections
+of values in which each value has a <em>key</em> . For example:</p>
+<pre><code class="language-mini">{a: 1, b: 2}
+</code></pre>
+<p>The values and keys can be of different basic Mini types.</p>
+<h3 id="tables">Tables</h3>
+<p>Tables are a special kind of objects in Mini. Having tables as built-in objects in Mini allows
+for better <a href="computation/data.md">data and object conversions</a> between languages. An example of
+a table in Mini:</p>
+<pre><code class="language-mini">{
+  type: &quot;table&quot;,
+  data: {
+      &quot;col1&quot;: [A1, A2, A3],
+      &quot;col2&quot;: [B1, B2, B3],
+      &quot;col3&quot;: [C1, C2, C3]
+  }
+}
+</code></pre>
+<p>To access an element of the table, you need to use the <a href="#dot-operator">dot operator</a>.
+For example:</p>
+<pre><code class="language-mini">  my_table = {
+    type: &quot;table&quot;,
+    data: {
+        &quot;col1&quot;: [A1, A2, A3],
+        &quot;col2&quot;: [B1, B2, B3],
+        &quot;col3&quot;: [C1, C2, C3]
+    }
+  }
+
+  my_table.col3[2]
+</code></pre>
+<p>In the above example the value of <code>my_table.col3[2]</code> would be <code>C3</code> as Mini indexes from zero (0).</p>
+<h2 id="functions">Functions</h2>
+<p>To define a function in Mini you need to use the <code>function</code> keyword.  A simple example is
+a function So, our simple function for <em>pi</em> above could be written in Mini using:</p>
+<pre><code class="language-mini">function() 3.14159265359
+</code></pre>
+<p>Because functions are just object values, they can be assigned to variables e.g.</p>
+<pre><code class="language-mini">pi = function() 3.14159265359
+</code></pre>
+<p>and then called later</p>
+<pre><code class="language-mini">pi()
+</code></pre>
+<pre><code class="language-mini">3.14159265359
+</code></pre>
+<blockquote>
+<p>&#x2728; Currently, calling a function like this won&apos;t work. That&apos;s because Mini expects all functions to be defined externally (see below). Contexts have a <code>callFunction()</code> method which takes the name of pre-registed external function. This method, or another similar one, needs to be able to accept a <code>function</code> object and call it.</p>
+</blockquote>
+<blockquote>
+<p>&#x2728; Currently, only single expression functions can be defined in Mini. It is likely that multi-expression function bodies will be possible in the future.</p>
+</blockquote>
+<h3 id="parameters">Parameters</h3>
+<pre><code class="language-mini">function(x, y) x * y
+</code></pre>
+<pre><code class="language-mini">function(x, y = 1) x * y
+</code></pre>
+<p>Repeatable parameters (a.k.a variadic parameters)</p>
+<pre><code class="language-mini">function(x, y...) x * sum(y)
+</code></pre>
+<pre><code class="language-mini">show = function(args...) names(args)
+</code></pre>
+<h3 id="recursion">Recursion &#x2728;</h3>
+<p>Recursive function calls can be useful.... Call themselves. But in Mini, functions do not have access to the global scope - they can only access local variables.</p>
+<pre><code class="language-mini">factorial = function(n) if(n == 0, 1, n * @(n - 1))
+</code></pre>
+<p>Compare this to how you would define the same function in other popular languages (using as similar syntax as possible):</p>
+<pre><code class="language-js">const factorial = (n) =&gt; n == 0 ? 1 : n * factorial(n - 1)
+</code></pre>
+<pre><code class="language-python">factorial = lambda(n): 1 if n == 0 else n * factorial(n - 1)
+</code></pre>
+<pre><code class="language-r">factorial = function(n) if(n == 0) 1 else n * factorial(n - 1)
+</code></pre>
+<blockquote>
+<p>&#x2728; Recursive function calls are currently just an idea an are not yet implemented.</p>
+</blockquote>
+<h3 id="lambdas">Lambdas &#x2728;</h3>
+<h2 id="calls">Calls</h2>
+<p>Functions are called using parentheses containing arguments: e.g</p>
+<pre><code class="language-mini">add(1, 2)
+</code></pre>
+<p>Named arguments can be used, but only after unnamed arguments. e.g.</p>
+<pre><code class="language-mini">add(1, other=2)
+</code></pre>
+<h2 id="operators">Operators</h2>
+<p>Most operators in Mini are simply shortcuts to writing function calls. For example, the forward slash operator <code>/</code> is a short cut for the <code>divide</code> function, so the expression <code>4/5</code>, is equivalent to the function call expression <code>divide(4, 5)</code>.</p>
+<p>This allows you to write shorter, more readable and comprehensible expressions. For example, instead of writing a nested set of calls like:</p>
+<pre><code class="language-mini">and(less(add(a, b), 10), equal(c, 1))
+</code></pre>
+<p>You can write:</p>
+<pre><code class="language-mini">a + b &lt; 10 &amp;&amp; c == 4
+</code></pre>
+<p>However, there are two operators, the dot (<code>.</code>) and the (<code>|</code>) pipe which behave differently.</p>
+<h3 id="dot-operator">Dot operator</h3>
+<p>The dot operator, <code>.</code>, is used to select members from an object or table. For example, to get a column <code>age</code> from a table named <code>data</code> you use <code>data.age</code> which is equivalent to <code>select(data, &apos;age&apos;)</code>. When used in this way, the dot operator acts like a function call shortcut just like the other operators.</p>
+<p>But the dot operator can also be used to define a <em>symbol</em> within a syntax expression. A syntax expression is a partially evaluated expression that can be used as an argument in a function call so that it&apos;s evaluation can be completed within an alternative scope. For example, the second parameter of the <code>filter</code> function is a syntax expression e.g.</p>
+<pre><code class="language-mini">filter(data, .age &lt; 40)
+</code></pre>
+<p>For more see <a href="#lambdas">lambdas</a>.</p>
+<h3 id="pipe-operator">Pipe operator</h3>
+<p>The pipe operator, <code>|</code>, allows for several function calls to be combined in a &quot;pipeline&quot;. It passes the expression on the left as the first argument of the function call on the right. So a set of nested function calls like:</p>
+<pre><code class="language-mini">sum(select(filter(data, &apos;row.age &lt;= 40&apos;), &apos;weight&apos;))
+</code></pre>
+<p>can be written in a more readable pipeline as:</p>
+<pre><code class="language-mini">data | filter(&apos;row.age &lt;= 40&apos;) | select(&apos;weight&apos;) | sum()
+</code></pre>
+<h3 id="operator-precedence">Operator precedence</h3>
+<p>Operators have differing levels of precedence. Precedence determines the order in which operators are parsed with respect to each other. Operators with higher precedence become the operands of operators with lower precedence. Operator precedence in Mini is very similar to that in other languages.</p>
+<p>The following table list the operators in Mini in order of decreasing precedence (in groups of equal precedence) along with their function call equivalents. See <a href="https://github.com/stencila/libcore"><code>stencila/libcore</code></a> for implementation and documentation for these functions.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Precedence</th>
+<th style="text-align:center">Operator</th>
+<th style="text-align:left">Usage example</th>
+<th style="text-align:left">Function call equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:center"><code>.</code></td>
+<td style="text-align:left"><code>value.member</code></td>
+<td style="text-align:left"><code>select(value, member)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">1</td>
+<td style="text-align:center"><code>[]</code></td>
+<td style="text-align:left"><code>value[member]</code></td>
+<td style="text-align:left"><code>select(value, member)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:center"><code>!</code></td>
+<td style="text-align:left"><code>!value</code></td>
+<td style="text-align:left"><code>not(value)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:center"><code>+</code></td>
+<td style="text-align:left"><code>+value</code></td>
+<td style="text-align:left"><code>positive(value)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">2</td>
+<td style="text-align:center"><code>-</code></td>
+<td style="text-align:left"><code>-value</code></td>
+<td style="text-align:left"><code>negative(value)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">3</td>
+<td style="text-align:center"><code>^</code></td>
+<td style="text-align:left"><code>value ^ expon</code></td>
+<td style="text-align:left"><code>pow(value, expon)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:center"><code>*</code></td>
+<td style="text-align:left"><code>value * other</code></td>
+<td style="text-align:left"><code>multiply(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:center"><code>/</code></td>
+<td style="text-align:left"><code>value / other</code></td>
+<td style="text-align:left"><code>divide(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">4</td>
+<td style="text-align:center"><code>%</code></td>
+<td style="text-align:left"><code>value % other</code></td>
+<td style="text-align:left"><code>remainder(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:center"><code>+</code></td>
+<td style="text-align:left"><code>value + other</code></td>
+<td style="text-align:left"><code>add(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">5</td>
+<td style="text-align:center"><code>-</code></td>
+<td style="text-align:left"><code>value - other</code></td>
+<td style="text-align:left"><code>subtract(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:center"><code>&lt;</code></td>
+<td style="text-align:left"><code>value &lt; other</code></td>
+<td style="text-align:left"><code>less(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:center"><code>&lt;=</code></td>
+<td style="text-align:left"><code>value &lt;= other</code></td>
+<td style="text-align:left"><code>less_or_equal(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:center"><code>&gt;</code></td>
+<td style="text-align:left"><code>value &gt; other</code></td>
+<td style="text-align:left"><code>greater(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">6</td>
+<td style="text-align:center"><code>&gt;=</code></td>
+<td style="text-align:left"><code>value &gt;= other</code></td>
+<td style="text-align:left"><code>greater_or_equal(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:center"><code>==</code></td>
+<td style="text-align:left"><code>value == other</code></td>
+<td style="text-align:left"><code>equal(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">7</td>
+<td style="text-align:center"><code>!=</code></td>
+<td style="text-align:left"><code>value != other</code></td>
+<td style="text-align:left"><code>not_equal(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">8</td>
+<td style="text-align:center"><code>&amp;&amp;</code></td>
+<td style="text-align:left"><code>value &amp;&amp; other</code></td>
+<td style="text-align:left"><code>and(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">9</td>
+<td style="text-align:center">||</td>
+<td style="text-align:left"><code>value</code>||<code>other</code></td>
+<td style="text-align:left"><code>or(value, other)</code></td>
+</tr>
+<tr>
+<td style="text-align:left">10</td>
+<td style="text-align:center">|</td>
+<td style="text-align:left"><code>value</code>|<code>cos()</code></td>
+<td style="text-align:left"><code>cos(value)</code></td>
+</tr>
+</tbody>
+</table>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/languages/mini.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>

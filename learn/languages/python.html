@@ -1,0 +1,262 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="python">Python</h1>
+<p>Stencila allows you use interactive Python code across the whole Stencila suite (articles, notebooks and sheets).
+In order to be able to use Python within Stencila documents you need to have the
+<a href="getting-started/installation.md#execution-contexts">Python execution context</a> enabled. You can write Python code
+just like you would in any other editor or reproducible notebook. You can install Python packages and import them,
+create and embed plots, and so on.</p>
+<h2 id="data-interchange">Data interchange</h2>
+<p>Stencila provides you with ability to use multiple programming languages to write interactive code within
+one document, working on the same data. In other words, you can manipulate the same data switching between different programming
+languages. This capability is achieved through <code>data interchange</code> feature.</p>
+<p>When you pass data between cells Stencila temporarily converts it into its built-in <a href="languages/mini/README.md">Mini language</a> data type.
+The table below shows (roughly) how data interchange between Mini and Python is implemented. For more details
+see <a href="https://github.com/stencila/py/blob/master/stencila/value.py">source code</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Mni</th>
+<th style="text-align:left">Python</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">boolean</td>
+<td style="text-align:left">bool</td>
+</tr>
+<tr>
+<td style="text-align:left">integer</td>
+<td style="text-align:left">int</td>
+</tr>
+<tr>
+<td style="text-align:left">float</td>
+<td style="text-align:left">float</td>
+</tr>
+<tr>
+<td style="text-align:left">string</td>
+<td style="text-align:left">str</td>
+</tr>
+<tr>
+<td style="text-align:left">array</td>
+<td style="text-align:left">Python list</td>
+</tr>
+<tr>
+<td style="text-align:left">object</td>
+<td style="text-align:left">Python object*</td>
+</tr>
+<tr>
+<td style="text-align:left">table</td>
+<td style="text-align:left">pandas.DataFrame</td>
+</tr>
+</tbody>
+</table>
+<p>*The object fields and methods are saved within the Mini object/array and converted accordingly.</p>
+<h2 id="cells">Cells</h2>
+<p>With Stencila you have full control over the sequence in which your code cells are executed. You can run the code in asynchronous order.
+You can refer to specific outputs from the given cell in any part of your Stencila document.
+Stencila does all this using its <a href="computation/engine.md">execution engine</a>.</p>
+<p>The engine manages automatic dependencies between the cells which are specific for each language. For cells written in
+Python it is fairly simple.  If you want to capture the output of the cell, create a variable and assign (<code>=</code>) the output.
+Note that the variables in Stencila are non-mutable &#x2728; . Whatever is on the right hand of the assignment (<code>=</code>)
+will become the cell input.</p>
+<p>You can the refer to this cell&apos;s input and output in the Stencila document.</p>
+<p>If you do not capture the output explicitly, you will not be able to refer to it later on. But the input of the cell
+will still be available.</p>
+<p>For example:</p>
+<pre><code class="language-python">import math
+
+x = 4
+math.sqt(x)
+</code></pre>
+<p>The input for this cell is <code>x</code>, the output is empty (<code>null</code>) and the value is 2 (<code>math.sqrt(4)</code>).</p>
+<p>If you want to capture the output and be able to refer back to it in the future you need to
+modify the cell as follows:</p>
+<pre><code class="language-python">import math
+
+x = 4
+y = math.sqrt(x)
+</code></pre>
+<p>The output is now <code>y</code> and you can refer back to this variable in any other cell in Stencila.</p>
+<h2 id="functions">Functions</h2>
+<p>You can use Python functions (either from Python packages or the ones you wrote yourself) in all Stencila documents.
+In Stencila notebooks and articles you just write Python code as normally. In Stencila Sheets you can call Python functions
+using the following syntax in the cells: <code>py= .....</code>. For example <code>py= import numpy as np</code> &#x2728;</p>
+<p>You can also make your Python functions available through the menu in Stencila Spreadsheet &#x2728; . This means that a user
+who interacts with the data primarily using the Stencila Spreadsheet will be able to apply your Python functions to the
+data without having to know how to code.</p>
+<p>In order to register your Python function with Stencila, you need to first <a href="computation/functions.md#adding-new-functions">create a simple package</a>
+using Stencila API.</p>
+<p>Each function should be included in a separate file with the <code>.py</code> extension (so, for example, <code>my_function1.py</code>) &#x2728; .
+The specification for your Python function should be written in a <a href="https://www.python.org/dev/peps/pep-0257/">Python docstring</a> following
+the <a href="https://github.com/stencila/libtemplate">Stencila libtemplate</a>.</p>
+<h3 id="test">Test</h3>
+<p>All functions should have tests written in the <code>tests</code> folder, following the standard naming. For example, tests for <code>func1.py</code> should be named <code>test_func1.py</code>.
+You can use Python&apos;s <code>unittest</code> library.</p>
+<pre><code class="language-python">import unittest
+from func1 import function_A
+......
+</code></pre>
+<p>Then run the tests:</p>
+<pre><code class="language-bash">$ python test_func1.py
+</code></pre>
+<h3 id="register">Register &#x2728;</h3>
+<p>Once you finished implementing and testing your Python function, you need to register it to make it available from within Stencila. In order to do
+that select <code>Register function</code> from the  menu and point to the main directory (for example, <code>libgenomics</code>) where the <code>.py</code> file with the function is located. Stencila will automatically
+create the documentation from the docstring. You can then use the function within Stencila.</p>
+<p>If you want to make the function available for someone else using Stencila on a different machine, select <code>Create function package</code>, then point
+to the man directory with function file. Once the function package is created, select where you want to save it. You can then share the package (which
+essentially is a <code>zip</code> file). If the main directory with the function exists as a GitHub or BitBucket repository (see <a href="https://github.com/stencila/libtemplate">these guidelines</a>),
+then you can simply point users to the repository.</p>
+<p>To register the function from the package, use the <code>Register function</code> option from the menu, as described above. If you are registering from a GitHub or BitBucket repository,
+just copy and paste the link to it.</p>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/languages/python.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>

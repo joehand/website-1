@@ -1,0 +1,245 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="installation">Installation</h1>
+<blockquote>
+<p>In this section you will learn how to install various Stencila software, including Stencila Desktop, Stencila language packages, and Stencila Docker images.</p>
+</blockquote>
+<p>For editing executable documents on your desktop (or laptop!) install:</p>
+<ul>
+<li><a href="#stencila-desktop">Stencila Desktop</a></li>
+</ul>
+<p>Stencila Desktop has built in support for executing code using Mini (our small, built-in language), Javascript, and Structured Query Language (SQL). To execute code in other languages, you will need to install one of our language packages:</p>
+<ul>
+<li><a href="#stencila-python-package">Stencila Python package</a></li>
+<li><a href="#stencila-r-package">Stencila R package</a></li>
+<li><a href="#stencila-node.js-package">Stencila Node.js package</a></li>
+</ul>
+<p>Or, use one of our Docker images which bundle these language packages (plus many other packages that our useful in data-driven research) in one reproducible computing environment:</p>
+<ul>
+<li><a href="#stencila-docker-images">Stencila Docker images</a></li>
+</ul>
+<h2 id="stencila-desktop">Stencila Desktop</h2>
+<p>Stencila Desktop is a desktop application for editing executable documents. It&apos;s available for Windows, Mac OS and Linux.</p>
+<h3 id="windows">Windows</h3>
+<p>Download the <code>.exe</code> file for the latest <a href="https://github.com/stencila/desktop/releases">Stencila Desktop release</a>. Then just double click the downloaded file to install the application.</p>
+<h3 id="mac-os">Mac OS</h3>
+<p>Download the <code>.dmg</code> file for the latest <a href="https://github.com/stencila/desktop/releases">Stencila Desktop release</a>. Then:</p>
+<ul>
+<li>double click the <code>.dmg</code> to make its content available (the name will show up in the Finder sidebar, at the bottom), a pop-up window will open;</li>
+<li>drag the application from the <code>.dmg</code> window into /Applications to launch install (you may need an administrator password);</li>
+<li>wait for the copy process to finish;</li>
+<li>eject the <code>.dmg</code> file by clicking the eject button in the Finder sidebar.</li>
+</ul>
+<p>(Thanks to <a href="https://apple.stackexchange.com/a/64848">patrix</a> for these instructions.)</p>
+<h3 id="linux">Linux</h3>
+<p>Download the AppImage* file for the latest <a href="https://github.com/stencila/desktop/releases">Stencila Desktop release</a>. Then double click on it and click <em>yes</em> to &quot;Make executable and run&quot;. Or, to install from command line, navigate to the folder where the AppImage file is located and then:</p>
+<pre><code class="language-bash">$ chmod a+x stencila-desktop-*.AppImage
+$ ./stencila-desktop-*.AppImage
+</code></pre>
+<p>*<a href="http://appimage.org/">AppImage</a> is a format for distributing applications for Linux and, on most distributions, will not require the installation of any dependencies.</p>
+<h2 id="stencila-python-package">Stencila Python package</h2>
+<blockquote class="warning">
+<p> We are currently working on making the Stencila Python package compatible with the latest Stencila Desktop. During that process, not all functionality may be available.</p>
+</blockquote>
+<p>The <a href="https://github.com/stencila/py">Stencila Python package</a> provides a <code>PythonContext</code> for executing Python code and functions from within Stencila documents.</p>
+<p>The package is not available via PyPI (Python Package Index) yet, so you need to install it from our Github repository.</p>
+<blockquote class="tip">
+<p> You may need to install <code>pip</code> first. On Windows, <a href="https://dev.to/el_joft/installing-pip-on-windows">these instructions</a> may be useful.</p>
+</blockquote>
+<p>Open a terminal session (on Windows, go to &quot;Start&quot; and then in &quot;Search for programmes and files&quot; type <code>cmd</code>) and type in:</p>
+<pre><code class="language-bash">pip install --user https://github.com/stencila/py/archive/master.zip
+</code></pre>
+<p>Then register the package&apos;s manifest so that it can be found by the Stencila Desktop and other Stencila packages,</p>
+<pre><code class="language-bash">python -m stencila register
+</code></pre>
+<h2 id="stencila-r-package">Stencila R package</h2>
+<blockquote class="warning">
+<p> We are currently working on making the Stencila R package compatible with the latest Stencila Desktop. During that process, not all functionality may be available.</p>
+</blockquote>
+<p>The <a href="https://github.com/stencila/r">Stencila R package</a> provides a <code>RContext</code> for executing Python code and functions from within Stencila documents.</p>
+<p>The package is not yet available on CRAN, so you need to install directly from our Github repository using the <a href="https://github.com/hadley/devtools"><code>devtools</code></a> package.</p>
+<blockquote class="tip">
+<p> You may need to install <code>devtools</code> first using <code>install.packages(&quot;devtools&quot;)</code> from within an R session</p>
+</blockquote>
+<p>Launch a R session on your machine and type:</p>
+<pre><code class="language-r">devtools::install_github(&quot;stencila/r&quot;)
+</code></pre>
+<p>Then register the package&apos;s manifest so that it can be found by the Stencila Desktop and other Stencila packages,</p>
+<pre><code class="language-r">stencila:::register()
+</code></pre>
+<h2 id="stencila-node-js-package">Stencila Node.js package</h2>
+<p>The <a href="https://github.com/stencila/node">Stencila Node.js package</a> provides a <code>NodeContext</code> and a <code>SQLiteContext</code> for executing Javascript and SQL code and functions respectively from within Stencila documents.</p>
+<p>This package comes bundled with Stencila Desktop so it does not need to be installed separately. But, for completeness, and because you may want to use it from another client application, we include these installation instructions here.</p>
+<blockquote class="tip">
+<p> You may need to install <code>npm</code> first. <a href="http://blog.teamtreehouse.com/install-node-js-npm-windows">On Windows, these instructions</a> may be useful.</p>
+</blockquote>
+<p>Open a terminal session (on Windows, go to &quot;Start&quot; and then in &quot;Search for programmes and files&quot; type <code>cmd</code>) and type in:</p>
+<pre><code class="language-bash">npm install stencila/node -g
+</code></pre>
+<blockquote class="tip">
+<p> Although this package is <a href="https://www.npmjs.com/package/stencila-node">available on NPM</a>, we currently recommend installing directly from the <code>master</code> branch on Github as per the above instructions</p>
+</blockquote>
+<p>Then register the package&apos;s manifest so that it can be found by other Stencila packages,</p>
+<pre><code class="language-bash">stencila-node register
+</code></pre>
+<h2 id="stencila-docker-images">Stencila Docker images</h2>
+<blockquote class="warning">
+<p> We are currently working on making Stencila&apos;s Docker images compatible with the latest Stencila Desktop. During that process, not all functionality may be available.</p>
+</blockquote>
+<p>Docker is a software platform which provides operating-system-level virtualization, also known as &quot;containerization&quot;. Stencila has several Docker images available in the <a href="https://github.com/stencila/images"><code>stencila/images</code></a> repository. Each image contains one or more of the Stencila packages for R, Python and Node.js. This allows you to use one of these images, instead on installing packages locally, in order to execute code from within executable documents.</p>
+<blockquote class="tip">
+<p> Check Docker&apos;s <a href="https://docs.docker.com/install/">official installation instructions</a> for the best way to install Docker for your operating system</p>
+</blockquote>
+<p>Once you have Docker installed, download the desired Docker image using <code>docker pull &lt;image-name&gt;</code>. For example, to download the <code>stencila/core</code> image:</p>
+<pre><code class="language-bash">docker pull stencila/core
+</code></pre>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/getting-started/installation.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>

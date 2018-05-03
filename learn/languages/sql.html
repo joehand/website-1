@@ -1,0 +1,203 @@
+<!DOCTYPE html><html><head>
+    <title> : Stencila</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/png" href="/img/favicon.png">
+    
+
+    <link rel="stylesheet" href="/css/materia.min.css">
+    <link rel="stylesheet" href="/css/docsearch.min.css">
+    <link rel="stylesheet" href="/css/website.css">
+    
+<style type="text/css">
+  main .content {
+    min-height: 60vh;
+  }
+
+  main .menu {
+    padding-top: 4em;
+    padding-left: 2em;
+  }
+
+  main .steps {
+    margin-top: 2em;
+  }
+
+  main .prev,
+  main .next {
+    font-size: 1.2em;
+  }
+
+  main .prev {
+    float: left;
+  }
+
+  main .next {
+    float: right;
+  }
+</style>
+<link rel="stylesheet" href="/css/prism.css">
+
+  </head>
+  <body>
+    <header class="header">
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/"><img src="/img/logo-name.png" alt="Stencila"></a>
+        <div class="navbar-burger"><span></span><span></span><span></span></div>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="/learn/getting-started/intro.html">Learn</a>
+          <a class="navbar-item" href="/contribute">Contribute</a>
+          <a class="navbar-item" href="/blog">Blog</a>
+        </div>
+        <div class="navbar-end">
+          <!--
+          Search temporarily disabled. See issue #2
+          <div class="navbar-item">
+            <div class="field">
+              <p class="control">
+                <input id="search" class="input" type="search" placeholder="Search">
+              </p>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    
+<main class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <div class="content">
+          <h1 id="sql">SQL</h1>
+<p>Cells and functions can be written using Structured Query Language. SQL is implemented in many alternative database engines
+each having slightly different dialects. Currently, Stencila <a href="computation/contexts.md">execution context</a> is available for
+<a href="https://www.sqlite.org/">SQLite</a> as a <code>SqliteContext</code>, and it is implemented in the Stencila packages for R, Python and Javascript &#x2728; .
+To use SQL in a Stencila document, you need to <a href="getting-started/installation.md#execution-contexts">enable one of these execution contexts</a>.</p>
+<h2 id="data-interchange">Data interchange &#x2728;</h2>
+<p>Stencila provides you with ability to use multiple programming languages to write interactive code within
+one document, working on the same data. In other words, you can manipulate the same data switching between different programming
+languages. This capability is achieved through <code>data interchange</code> feature.</p>
+<p>When you pass data between cells Stencila temporarily converts it into its built-in <a href="languages/mini/README.md">Mini language</a> object.
+Currently, only the <code>table</code> data type can be exchanged with SQL. All data values are stored as temporary tables.</p>
+<h2 id="cells">Cells</h2>
+<p>With Stencila you have full control over the sequence in which your code cells are executed. You can run the code in asynchronous order.
+You can refer to specific outputs from the given cell in any part of your Stencila document.
+Stencila does all this using its <a href="computation/engine.md">execution engine</a>.</p>
+<p>Cell inputs are determined by parsing the <code>FROM</code> clause of the SQL statement.
+For example, the following cell has a single input <code>people</code>, the value is the result of
+the SQL statement and the output is empty (<code>null</code>).</p>
+<pre><code class="language-sql">SELECT * FROM people ORDER BY height DESC
+</code></pre>
+<p>Parsing of inputs from more complicated SQL statements involving joins or sub-queries is currently not supported.</p>
+<p>The the standard syntax of SQL means that the above cell has empty output in Stencila. If you want to refer to its
+output, you need to explicitly capture it by  using an assignment operator before the <code>SELECT</code> statements.
+For example, the following cell has an output <code>brown_hair</code> and an input <code>people</code>. The value is the result
+of the SQL statement.</p>
+<pre><code class="language-sql">brown_hair = SELECT * FROM people WHERE hair_color == &apos;Brown&apos;
+</code></pre>
+<h2 id="functions">Functions</h2>
+<p>Stencila functions can be implemented using SQL. The approach to type checking and dispatching is similar to other languages.
+But instead of using native functions in the implementation language, you generate SQL that is executed within the database.</p>
+<p>Lets say you have a table called <code>data</code> in a database with columns <code>height</code> and <code>width</code>. You would like to be able to
+perform computations on that data without having to convert all that data into JSON. For example,</p>
+<pre><code class="language-mini">people | extend(bmi = (.mass * .mass) / .height) | sort(-.bmi)
+</code></pre>
+<p>Let&apos;s try to implement the <code>extend</code> function first. For the example call above we want it to generate SQL like this:</p>
+<pre><code class="language-sql">SELECT *, (mass * mass) / height AS bmi FROM people
+</code></pre>
+<pre><code class="language-python">def extend(args):
+  # Get the database table to be extended, by
+  # selecting the argument named `value`, or the first argument
+  value = select(args, [&apos;value&apos;, &apos;1&apos;])
+  assert_type(value, &apos;table&apos;)
+  # Get the remaining arguments and execute them
+  others = [execute(arg) for arg in remainder(args, value)]
+
+  # Generate SQL
+  return &apos;SELECT *, &apos;
+</code></pre>
+<blockquote>
+<p>&#x2728; Writing of functions in SQL is not yet implemented</p>
+</blockquote>
+
+        </div>
+        <div class="steps">
+          
+          
+        </div>
+      </div>
+      <div class="column is-one-quarter">
+        <aside class="menu">
+  <p class="menu-label">
+    Getting started
+  </p>
+  <ul class="menu-list">
+    <li><a href="/learn/getting-started/intro.html">Introduction</a></li>
+    <li><a href="/learn/getting-started/installation.html">Installation</a></li>
+    <!-- <li><a href="/learn/getting-started/quick-start.html">Quick start</a></li> -->
+    <!-- <li><a href="/learn/getting-started/faq.html">FAQ</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Computation
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/computation/data.html">Data</a></li> -->
+    <!-- <li><a href="/learn/computation/operations.html">Operations</a></li> -->
+    <!-- <li><a href="/learn/computation/contexts.html">Contexts</a></li> -->
+    <!-- <li><a href="/learn/computation/engine.html">Engine</a></li> -->
+    <!-- <li><a href="/learn/computation/functions.html">Functions</a></li> -->
+  </ul>
+  <!-- <p class="menu-label">
+    Languages
+  </p> -->
+  <ul class="menu-list">
+    <!-- <li><a href="/learn/languages/mini.html">Mini</a></li> -->
+    <!-- <li><a href="/learn/languages/javascript.html">Javascript</a></li> -->
+    <!-- <li><a href="/learn/languages/python.html">Python</a></li> -->
+    <!-- <li><a href="/learn/languages/r.html">R</a></li> -->
+    <!-- <li><a href="/learn/languages/sql.html">SQL</a></li> -->
+  </ul>
+</aside>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+    <footer class="footer">
+  <div class="container">
+      <div class="columns">
+        <div class="column has-text-grey-light">
+            &#xA9; 2018 Stencila <a href="https://github.com/stencila/website/graphs/contributors">contributors</a>
+        </div>
+        <div class="column">
+            <a id="edit-page" class="button" href="https://github.com/stencila/website/edit/master/src/learn/languages/sql.md" target="_blank" title="Edit this page">&#x270E; Edit</a>
+        </div>
+      </div>
+  </div>
+</footer>
+
+  
+  
+
+  <script type="text/javascript" src="/js/docsearch.min.js"></script>
+  <script type="text/javascript" src="/js/website.js"></script>
+  
+<script type="text/javascript" src="/js/prism.js"></script>
+<script type="text/javascript" src="/js/prism-bash.min.js"></script>
+<script type="text/javascript" src="/js/prism-json.min.js"></script>
+<script type="text/javascript" src="/js/prism-mini.js"></script>
+<script type="text/javascript" src="/js/prism-python.min.js"></script>
+<script type="text/javascript" src="/js/prism-r.min.js"></script>
+<script type="text/javascript" src="/js/prism-sql.min.js"></script>
+
+
+</body></html>
